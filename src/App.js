@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Table from "./components/table/Table";
 import Pagination from "./components/pagination/Pagination";
+import Filter from "./components/filter/Filter";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
@@ -12,6 +13,7 @@ function App() {
   const [order, setOrder] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const getPosts = async () => {
@@ -48,15 +50,32 @@ function App() {
     }
   };
 
+  // Фильтруем карточки
+  function search(posts) {
+    const columns = posts[0] && Object.keys(posts[0]);
+
+    return posts.filter((post) =>
+      columns.some((column) =>
+        post[column]
+          .toString()
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      )
+    );
+  }
+
   return (
     <div className="container mt-5">
+      <Filter
+        searchValue={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
       <Table
-        posts={currentPosts}
+        posts={search(currentPosts)}
         loading={loading}
         onClick={sorting}
         order={order}
       />
-
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
