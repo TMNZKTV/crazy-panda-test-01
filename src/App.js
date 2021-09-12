@@ -4,7 +4,7 @@ import axios from "axios";
 import Table from "./components/table/Table";
 import Pagination from "./components/pagination/Pagination";
 
-axios.defaults.baseURL = "http://jsonplaceholder.typicode.com";
+axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
 function App() {
   const [posts, setPosts] = useState([]);
