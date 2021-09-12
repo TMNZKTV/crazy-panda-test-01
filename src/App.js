@@ -48,7 +48,6 @@ function App() {
     }
   };
 
-  console.log("order :", order);
   return (
     <div className="container mt-5">
       <Table
